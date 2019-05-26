@@ -165,3 +165,30 @@
      * 
      */
 }
+
+
+{
+    /** 
+     * Module 加载
+     * 传统浏览器通过script 标签加载 javascript 脚本
+     * 默认情况下, 浏览器是 同步加载 javascript 脚本后, 即渲染引擎会遇到 script 标签就会停下来,执行完脚本后 再继续渲染.
+     * 如果是外部脚本, 还必须等待脚本下载完成的时间.
+     * 如外部脚本过于庞大,或卡死.会造成 浏览器堵塞,用户体验会非常不友好.
+     * 
+     * 
+     * 异步加载脚本的两种语法
+     * <script src="path/to/myModule.js" defer></script>
+     * <script src="path/to/myModule.js" async></script>
+     * defer 或 async 属性属于异步加载.
+     * defer 与 async 的区别: 
+     * defer 要等待 整个页面在内存中正常渲染完结束.才会开始执行该脚本. ("渲染完再执行")
+     * async 一旦下载完, 渲染引擎会暂停渲染,执行完该脚本后,再继续渲染. ("下载完就执行")
+     * 多个defer脚本, 会按照他们的页面出现的顺序加载. 多个async 脚本是不可保证加载顺序的.
+     * 
+     * 
+     * es6 异步加载. type="module"属性.
+     * <script type="module" src="./foo.js"></script>
+     * type="module" 等同于打开了script 标签的 defer属性
+     * 
+    */
+}
