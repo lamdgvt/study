@@ -143,3 +143,13 @@ server.listen(8090, () => {
  * 
 */
 require('./ES6.js')
+
+
+/**
+ * nodemon
+ * 监听js.改变
+ * npm install --save-dev nodemon
+ *
+ * nodemoin app.js
+ *
+*/

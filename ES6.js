@@ -192,3 +192,62 @@
      * 
     */
 }
+
+{
+    /**
+     *  Promise 
+     *  两个参数
+     *  resolve, reject
+     */
+    let res = {
+        data: '成功',
+        error: '失败'
+    }
+    const promise = new Promise((resolve, reject) => {
+        if (/** 异步操作成功 */ true) {
+            resolve(res.data)
+        } else {
+            reject(res.error)
+        }
+    })
+
+    promise.then(function (value) {
+        // 此回调, 等待 Promise 对象的状态变成 resolved 时调用
+    }).catch(function (error) {
+        // 此回调, 等待 Promise 对象的状态变成 rejected 时调用
+    }).finally(function () {
+        // 此回调, 不管 Promise 对象的状态是如何, 在执行完 then 或 catch 后都会执行的回调函数
+        // 服务器处理一个请求, 关闭服务器 server.stop
+    })
+
+
+    /**
+     * Promise.all 
+     * 可以将多个 Promise 实例 包装成一个新的Promise 实例
+     * 
+     * allP 有两种状态
+     * p1,p2,p3 都是 fulfilled 情况下, allP 状态才会变成 fulfilled
+     * p1,p2,p3 中有一个是 rejected, allP 状态就会变成 rejected
+     * 此时的第一个 reject 的实例返回值, 会传递给 allP 的回调函数
+     */
+    const allP = Promise.all([p1, p2, p3]).then(function (posts) {
+        // 成功
+    }).catch(function (posts) {
+        // 失败
+    })
+
+
+    /**
+     * Promise.race
+     * race 同样是将多个 Promise 实例包装成一个新的 Promise 
+     * p1,p2,p3 之中, 有一个实例率 率先改变状态, allP 就会跟着改变状态
+     */
+
+    /**
+     * Promise.reslove
+     *  
+     */
+    Promise.resolve('foo')
+    // 等价于
+    new Promise(resolve => resolve('foo'))
+}
