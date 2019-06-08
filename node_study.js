@@ -1,5 +1,6 @@
 /**
  * node.js
+ * node 控制台
  */
 
 /* 
@@ -56,20 +57,89 @@ let server = http.createServer()
  *  response 响应对象, 用来响应客户端发送响应对象
  *  
  *  response.write('') 可以用来给客户端 发送响应数据, 响应完 需要用end结束响应
- *  response.end()
+ *  response.end('')  发送响应数据, 并结束响应
  *  
  *  所有请求都走 request 事件, 根据不同的 url 返回不同的数据
 */
 server.on('request', (req, res) => {
-    console.log(req, res)
+    /** 
+    * 设置发送数据 响应头部信息
+    * 设置成 utf-8, 告诉浏览器解析信息 需要使用 utf-8 解析
+    * 
+    * text/plain 指文本信息, html 只会将其当做 普通文本, 不会当做 html 处理
+    * text/html 返回 html 字符串, 浏览器会当成 html 代码处理
+    * 
+    * 返回不同的资源, 需要指定不一样的 Content-Type
+    * http://tool.oschina.net/commons
+    */
+    res.setHeader('Content-Type', 'text/plain; charset=utf-8')
+    res.setHeader('Content-Type', 'text/html; charset=utf-8')
+
+    /** 
+     * 响应状态码 设置为 302, 重定向, 页面会自动跳转 头部信息的 Location
+    */
+    res.statusCode = 302
+    res.setHeader('Location', 'https://www.baidu.com')
+
+
+    /** 
+     * art-template  模板引擎
+     * 加载 node_modules 第三方模块 也是使用require()
+     * let art = require('art-template')
+     * 客户端渲染不利于 SEO 搜索引擎优化
+     * 服务端渲染是可以被爬虫抓取到的, 客户端异步渲染是很难被爬虫抓取到的
+    */
+
+    /** 
+     * link script img iframe video audio
+     * 具有 src 、 href (link) 属性
+     * 静态资源请求
+     * 
+     * /assets
+     * 将静态资源 放入 /assets 文件夹内
+     * 判断 url.indexOf /assets === 0
+     * 则统一访问 静态资源
+     * fs.readFile('.' + url, function(err, data){
+     *      if (err) {
+     *          return res.end('404 Not Found.')
+     *      }
+     *      res.end(data)
+     * })
+     */
     res.end()
 })
 
 /**
- *  绑定端口号, 启动服务器
+ * url 模块
+ * url.parse('/.......', Boolean)
+ * url.parse(req.url,true)
+ */
+let url = require('url')
+// 
+
+
+/**
+ *  绑定端口号, 启动服务器, 网上部署的时候 默认用80, 否则用户需要输入 端口号
+ *  一台计算机, 一个端口号只能占用一个应用程序
  *  服务器启动的回调
 */
 server.listen(8090, () => {
     console.log('服务器已启动: 8090端口')
 })
 
+/**
+ *  os 当前机器 CPU 信息模块
+ *  path 获取路径操作 模块
+*/
+
+/**
+ * require 用于加载模块
+ * node 中,没有全局作用域, 只有模块作用域
+ * 
+ * 模块与模块之间的通信
+ * exports 默认是一个空对象
+ * 
+ * module.exports && exports
+ * 
+*/
+require('./ES6.js')
