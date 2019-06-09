@@ -1,6 +1,9 @@
 /**
  * node.js
  * node 控制台
+ * 
+ * __dirname 当前文件所属目录绝对路径
+ * __filename  当前文件绝对路径
  */
 
 /* 
@@ -153,3 +156,23 @@ require('./ES6.js')
  * nodemoin app.js
  *
 */
+
+
+/**
+ * path 模块
+ * 
+ * 获取当前路径的目录路径
+ * dirname(path)
+ * 
+ * 判断是否绝对路径
+ * path.isAbsolute(path)
+ * 
+ * 解析路径
+ * path.parse(path)
+ * 
+ * 拼接路径
+ * path.join('c:/window', 'root')
+ * 
+*/
+let path = require('path')
+
