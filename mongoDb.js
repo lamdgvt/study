@@ -1,6 +1,7 @@
 /**
  * mongobd
- *
+ *  
+ * 设置 path:  ..../mongoDB/bin
  *
  * mongodb 默认使用执行 mongod 命令C盘符根目录下的 /data/db 作为自己的数据库存储目录
  * 第一次执行该命令时, 先手动新建一个 /data/db

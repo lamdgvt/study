@@ -3,6 +3,8 @@
     "nodemon": "^1.19.1"
   },
   "dependencies": {
-    "mongoose": "^5.5.13"
+    "express": "^4.17.1",
+    "mongoose": "^5.5.13",
+    "nodemon": "^1.19.1"
   }
 }
