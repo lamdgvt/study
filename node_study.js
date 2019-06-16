@@ -56,7 +56,7 @@ let server = http.createServer()
 /**
  *  注册 request 请求事件
  *  @params 
- *  request 请求对象, 获取客户端请求信息
+ *  request 请求对象, 获取客户端请求信息, 路径.
  *  response 响应对象, 用来响应客户端发送响应对象
  *  
  *  response.write('') 可以用来给客户端 发送响应数据, 响应完 需要用end结束响应
@@ -77,6 +77,7 @@ server.on('request', (req, res) => {
     */
     res.setHeader('Content-Type', 'text/plain; charset=utf-8')
     res.setHeader('Content-Type', 'text/html; charset=utf-8')
+    res.setHeader('Content-Type', 'application/json; charset=UTF-8')
 
     /** 
      * 响应状态码 设置为 302, 重定向, 页面会自动跳转 头部信息的 Location
