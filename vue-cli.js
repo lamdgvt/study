@@ -1,5 +1,9 @@
 /**
  *  Vue cli
+*/
+
+/**
+ *  vue-cli 命令
  *
  *  vue serve [options] [entry]
  *  vue serve 使用了 vue create 创建项目相同的默认设置(webpack、 Babel、 PostCss、 ESLint)
@@ -46,5 +50,55 @@
  *  --report  生成 report.html 以帮助分析包内容
  *  --report-json  生成 report.json 以帮助分析包内容
  *  --watch  监听文件变化
+ *
+ *
+ *  vue-cli-service inspect [options] [...paths]
+ *  vue-cli-service inspect 可以审查一个 vue-cli 项目的 webpack config.
+ *  @Options
+ *  --mode 指定环境模式 (默认值: development)
+ *
+ *
+ *  查看所有的可用命令
+ *  npx vue-cli-service help
+ *
+*/
+
+/**
+ *  browserslist 浏览器兼容配置表
+ *  package.json 文件内有browserslist 字段 或者 单独的一个 .browserslist 文件, 用于指定项目的支持的浏览器范围.
+ *  这个值会被 @babel/preset-env 和 Autoprefixer 用来确定需要转译的 javascript 特性和 css 浏览器需要的前缀.
+ *  配置语句的查询结果
+ *  https://browserl.ist/
+ *
+ *
+ *  Polyfill (不理解)
+ *  babel
+*/
+
+/**
+ *  HTML 和 静态资源
+ *  pubilc/index.html 会被 html-webpack-plugin 处理, 资源链接会自动注入.
+ *
+ *  <%= VALUE %>  用于不转义插值
+ *  <%- VALUE %>  用来做HTML转义插值
+ *  <% expression %>  用来描述JavaScript 流程控制
+ *
+ *  Preload   不理解
+ *  Prefetch    不理解
+ * 
+ *  当基于已有后端使用 Vue cli时, 相当于后台渲染页面, 不需要 index.html
+ *  在 Vue.config.js 配置
+ *  filenameHashing: false, // 去掉文件名的 hash
+ *  chainWepack: config => {
+ *    config.plugins.delete('html')
+ *    config.plugins.delete('preload')
+ *    config.plugins.delete('prefetch')
+ *  }
+ *  
+ *   ——> 记录致 处理静态资源
+ * 
+ */
+
+/**
  *  
 */
