@@ -99,6 +99,15 @@
  * 
  */
 
+ 
+
 /**
+ *  构建目标
+ *  vue-cli-service build
+ *  
+ *  index.html 会带有注入的资源和 resource hint
+ *  第三方库会被分到一个独立包以便刚好的缓存
+ *  小于 4kb 的静态资源会被内联在 JavaScript 中
+ *  public 中的静态资源会被复制到输出目录中
  *  
 */
