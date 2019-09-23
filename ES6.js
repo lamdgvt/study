@@ -154,20 +154,6 @@
 
 
 {
-
-}
-
-
-{
-    /**
-     * Set
-     * 它类似于数组，但是成员的值都是唯一的，没有重复的值
-     * 
-     */
-}
-
-
-{
     /** 
      * Module 加载
      * 传统浏览器通过script 标签加载 javascript 脚本
@@ -250,4 +236,96 @@
     Promise.resolve('foo')
     // 等价于
     new Promise(resolve => resolve('foo'))
+}
+
+{
+
+}
+
+
+{
+    /**
+     * Set
+     * 它类似于数组，但是成员的值都是唯一的，没有重复的值
+     * Set 本身是一个构造函数.
+     * 
+     * new Set([1,2,3,4,5,6])
+     * 
+     * .size 获取Set的length
+     * .add  向Set结构加入成员
+     * .delete  删除某个值, 返回一个Boolean, 表示删除是否成功.
+     * .has  返回一个Boolean, 表示该值是否为 Set 成员.
+     * .clear()  清除所有的成员.
+     * 
+     * Array.from 可以将 Set 结构转为数组.
+     * 
+     * 遍历操作:
+     * .keys  返回键名的遍历器
+     * .values  返回键值的遍历器
+     * .entries 返回键值对的遍历器
+     * .forEach 使用回调函数遍历每个成员
+     * 
+     */
+
+    /**
+     * WeakSet
+     * 结构与 Set 类似, 与Set有两个区别.
+     * WeakSet 成员只能是对象, 不能是其他类型的值.
+     * 不可遍历
+     * 
+     * .add 添加新成员
+     * .delete  清除指定成员
+     * .has     返回一个Boolean, 表示该值是否存在
+     * 
+    */
+
+    /**
+     * Map
+     * 对象(Object), 本质上是键值对(hash 结构), 只支持字符串当键.
+     * Map 解决了这个问题, 也是键值对的集合, 但范围不限于字符串.
+     * Object提供了'字符串 —— 值'的对应. Map 结构提供了'值——值'对应
+     *  
+     * new Map()
+     * 
+     * .size 返回Map结构的成员总数.
+     * .set(key, value)  key键名
+     * .get(key)  获取对应的键值
+     * .has(key)  判断是否有对应的键
+     * .delete(key) 删除某个键
+     * .clear()     清除所有成员
+     * 
+     * .keys 键名的遍历器
+     * .values  键值的遍历器
+     * .entries 所有成员的遍历器
+     * .forEach 遍历Map的所有成员
+     * 
+    */
+
+    /**
+     * WeakMap
+     * 与 Map 结构类似, 用于生成键值对的集合.
+     * WeakMap 只接受对象作为键名(null 除外)
+     * 
+     * 不能被遍历, 无法清空 不支持clear
+     * 
+    */
+}
+
+
+{
+    /**
+     * Iterator  遍历器对象
+    */
+}
+
+{
+    /**
+     * Generator    状态机
+     * 
+     * Generator 会返回一个遍历器对象, 有两个特征
+     * function 关键字, 函数名之间有个 *(星号)
+     * 函数体内部使用 yield 表达式. 内部状态 yield(产出)
+     * 
+    */
+
 }
