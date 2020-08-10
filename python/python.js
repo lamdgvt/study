@@ -137,7 +137,7 @@
  * for value in [1,2,3]
  * for index, value in enumerate([1,2,3])
  * pass, break
- * 
+ *
  * while循环语句
  * i = 0
  * while i <= 10:
@@ -149,30 +149,128 @@
  * 随机数 random
  * import random
  * random.randint(1 ,20)
- * 
+ *
  * 范围指定
- * range(8)  # range(0, 8) 包含0 但是不包含8  0,1,2,3,4,5,6,7 
- * 
- * 
+ * range(8)  # range(0, 8) 包含0 但是不包含8  0,1,2,3,4,5,6,7
+ *
+ *
  * String
  * name = 'steven'
- * 
+ *
  * # in  在...里面
  * result = 'eve' in name  # 返回值是布尔类型 True False
- * 
+ *
  * # not in 没有在...里面
  * result = 'tb' not in name # 返回值是布尔类型 True False
- * 
+ *
  * # % 字符串的格式化
  * print('%s 说: %s' %(name, '123'))
- * 
+ *
  * # r 保留原格式  有r 则不发生转义, 没有r 则发生转义
  * print(r'%s 说: ' %name)
- * 
+ *
  * 字符串取值
  * name[1:4]
  * 倒序
  * name[::-1]
+ *
+ *
+ * 元组：
+ * 类似列表
+ *
+ * 定义符号: ()
+ * 元组内容不可修改
+ * 关键字 tuple
+ * 拆包  x,*y = (9,3,5,2)
+ *
+ * 字典：
+ * 定义符号: {}
+ * 关键字 dict
+ *
+ * 集合: set关键字 无序的不重复的元素
+ * 作用: 去重
+ * 符号: - & | ^
+ * s1 = set()
+ * s2 = {} # 字典: { key:value... }  集合 { 元素1, 元素2, 元素3 }
+ * add('String')
+ * update(元组)
+ * remove('String')
+ * pop()  随机删除
+ * clear()  清空
+ * discard() 丢弃  类似remove 移除不存在的元素, 不会报错
+ * 对称差集 s = set()
+ * result = (s1 | s2) - (s1 & s2)
+ * result = s1 ^ s2 寻找两个列表不一样的元素
+ *
+ *
+ * 可变 和 不可变
+ *
+ * 不可变:
+ * 对象所指向内存的值 不可变
+ * 不可变的类型 int string float 元组tuple
+ *
+ * 可变:
+ * 对象所指向的内存中的值是可以改变的
+ * 可变类型: 字典dict、列表list
+ *
+ *
+ * 函数:
+ * def 函数名([参数, 参数...]):
+ *
+ * def fn(*args):
+ * *args 空元组
+ * 调用方法时, 可以任意参数
+ *
+ * def fn(**kwargs):
+ * fn(**dict)
+ * 元组拆包
+ * fn(001='', 002='' ...)
+ *
+ * def fn(name, age) 普通参数
+ * fn('aa', 18) --> 形参与实参个数要一致
+ *
+ * def func(*args):
+ *  pass
+ * fn(1,2,3,4...) 调用时, 实参的可有可无, 可多.  不能是关键字参数
+ *
+ * def func(**kwargs):
+ *  pass
+ * func( a=1, b=2, c=3 ) 调用时, 实参的可有可无, 可多.  必须是关键字参数
+ *
+ * def func(*args, **kwargs):
+ *  pass
+ *
+ * def func(name, *args, **kwargs):
+ *  pass
+ *
+ * 默认值 + 关键字
+ *
+ * def func(name, age = 18):  # 默认值18
+ *  pass
+ *
+ * func('tom')
+ *
+ * func('tom', age = 20) ---> 关键字赋值
+ *
+ * global 全局变量
+ * 子集修改时需声明 global : global name
+ * nonlocal: nonlocal name
+ *
+ * 使用装饰器
+ * @decorate
+ * def house():
+ *  pass
+ *
+ * 1. house 被装饰函数
+ * 2. 将被装饰函数作为参数传给装饰器 decorate
+ * 3. 执行你的装饰器函数
+ *
+ * 匿名函数
+ * lambda  参数1, 参数2... : 运算
+ *
+ *
+ * max 最大值
+ * max([1,2,4,34562,5646,234,123])
  * 
  * 
 */
