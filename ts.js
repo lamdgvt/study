@@ -26,4 +26,11 @@
  * 它只能赋值 null 和 undefined
  * 
  * Null 和 Undefined
+ * 
+ * 联合类型
+ * let b : boolean | string
+ * 
+ * function fn(参数: 类型, 参数: 类型): 类型 {
+ *   ...
+ * }
 */
