@@ -1,0 +1,30 @@
+推荐拆件列表：
+GitLens - Git supercharged
+Vetur
+Eslint
+
+"eslint.autoFixOnSave": true,
+"eslint.validate": [
+    "javascript", // 用eslint的规则检测js文件
+    {
+        "language": "vue", // 检测vue文件
+        "autoFix": true, // 为vue文件开启自动修复功能
+    },
+    {
+        "language": "html", // 检测html文件
+        "autoFix": true, // 为html文件开启自动修复功能
+    }
+]
+
+Prettier -Code formatter    格式化
+Indent Rainbow              缩进区域展示优化
+npm Intellisense            智能补全 npm 路径
+Import Cost                 Npm 包大小提示
+open in browser             在浏览器打开文件
+EditorConfig for VS Code    读取项目统一的, .editorconfig
+Code Spell Checker          单词拼写检查
+Code Runner                 快速运行代码片段
+Project Manager             管理项目列表, 快速切换
+Visual Studio IntelliCode   代码提示工具
+Live Server                 快速创建静态资源服务器
+Debugger for Chrome         配合 Chrome 调试前端页面代码
