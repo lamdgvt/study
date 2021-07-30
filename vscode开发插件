@@ -45,7 +45,7 @@ Vetur                       vue开发工具
     "prettier.singleQuote": true,
     "prettier.tabWidth": 4,
     //  #让函数(名)和后面的括号之间加个空格
-    "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
+    "javascript.format.insertSpaceBeforeFunctionParenthesis": false,
     // #这个按用户自身习惯选择
     "vetur.format.defaultFormatter.html": "prettier",
     // #让vue中的js按"prettier"格式进行格式化
