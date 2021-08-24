@@ -97,6 +97,6 @@ Vetur                       vue开发工具
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "[vue]": {
-        "editor.defaultFormatter": "yoyo930021.vuter"
+        "editor.defaultFormatter": "octref.vuter"
     } // 两个选择器中是否换行
 }
