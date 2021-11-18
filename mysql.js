@@ -106,12 +106,25 @@
  * (19) 限制
  *      SELECT * FROM 表名 [LIMIT offset, length];
  *      例如: SELECT * FROM student3 LIMIT 0,10;
- * 
+ * (20) select 语句总结
+ *      SELECT 字段 FROM 表名 WHERE 条件 GROUP  BY 字段 HAVING 条件 ORDER BY 字段 LIMIT offset, length
+ * (21) 顺序
+ *      1. From 表名
+ *      2. WHERE 条件
+ *      3. GROUP BY 字段
+ *      4. HAVING 条件
+ *      5. SELECT 字段
+ *      6. ORDER BY 字段
+ *      7. LIMIT 限制
+ * (22) 数据库约束主要: 主键约束、非空约束、唯一约束、默认约束(缺省约束)、外键约束、检查约束(Mysql 不支持)
+ *      主键: 唯一标识一条记录
+ * (23) 
+ *      
  * 
  * 函数
  * abs(x)   绝对值
  * ceil(x)  向上取整
- * floor(x) 向下取整
+ * floor(x) 向下整
  * rand()   随机数
  * round()  随机整数
  * concat(s1, ...sn) 多个字符串 合并为一个字符串
@@ -143,8 +156,8 @@
  * user()    数据库的用户
  * MD5(str)  MD5加密数据
  * 
- * 数据类型
  * 
+ * 数据类型
  * 整数类型     字节        说明
  * tinyint      1       无符号: 0 ~ 255         有符号: -128 ~ 127
  * smllint      2       无符号: 0 ~ 65535       有符号: -32768 ~ 32767

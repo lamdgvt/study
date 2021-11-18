@@ -12,7 +12,7 @@
  * 
  * 对象
  * Object 
- * // 属性名加个问号 可有可无
+ * 属性名加个问号 可有可无
  * let obj : { name: string, age?: number }
  * obj = { name: '123', age: 12 }
  *
