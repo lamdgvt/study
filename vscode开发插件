@@ -17,7 +17,9 @@ Live Server                 快速创建静态资源服务器
 Debugger for Chrome         配合 Chrome 调试前端页面代码
 Markdown Preview Enhanced   md 文件预览工具
 Manta s Stylus Supremacy    格式化工具
-Vetur                       vue开发工具
+Vetur2                        vue  开发工具
+Vue Language Features (Volar) vue3 开发工具
+
 
 
 {
