@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const arr = [
+            [1, 2, 3, 4, 5],
+            [6, 7, 8, 9, 10],
+            [11, 12, 13, 14, 15],
+            [16, 17, 18, 19, 20],
+            [21, 22, 23, 24, 25]
+        ]
+
+        const perversionRotate = (arr) => {
+            const anewArr = [];
+
+            for (let i = arr.length - 1; i >= 0; i--) {
+                const item = arr[i];
+                const inlineArr = [];
+
+                for (let r = item.length - 1; r >= 0; r--) {
+                    const team = item[r];
+
+                    inlineArr.push(team);
+                }
+
+                anewArr.push(inlineArr)
+            }
+
+            return anewArr
+        }
+
+        const leftRotate = (arr) => {
+            const anewArr = [];
+
+            for (let i = 0; i < arr.length; i++) {
+                const item = arr[i];
+
+                for (let r = 0; r < item.length; r++) {
+                    const team = item[r];
+
+                    const currentIndex = item.length - 1 - r;
+
+                    if (!anewArr[currentIndex]) anewArr[currentIndex] = [];
+
+                    anewArr[currentIndex][i] = team;
+                }
+            }
+
+            return anewArr
+        }
+
+        const rightRotate = (arr) => {
+            const anewArr = [];
+
+            for (let i = 0; i < arr.length; i++) {
+                const item = arr[i];
+
+                const currentIndex = arr.length - 1 - i;
+
+                for (let r = 0; r < item.length; r++) {
+                    const team = item[r];
+
+                    if (!anewArr[r]) anewArr[r] = [];
+
+                    anewArr[r][currentIndex] = team;
+                }
+            }
+
+            return anewArr
+        }
+
+        const arr2 = perversionRotate(arr)
+
+        const arr3 = leftRotate(arr)
+
+        const arr4 = rightRotate(arr)
+
+        console.log(arr4)
+    </script>
+</body>
+
+</html>
