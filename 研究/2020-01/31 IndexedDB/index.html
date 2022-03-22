@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const request = window.indexedDB.open('eprSliceBase64Data');
+
+        let db = null;
+        let objectStore = null;
+
+
+        // const read = () => {
+        //     console.log(db)
+        //     const objectStore = db.objectStoreNames('person')
+        //     const request = objectStore.get(1);
+
+        //     request.onerror = () => {
+        //         console.log('事务失败');
+        //     };
+
+        //     request.onsuccess = () => {
+        //         console.log(request.result)
+        //         if (request.result) {
+        //             console.log('Name: ' + request.result.name);
+        //             console.log('Age: ' + request.result.age);
+        //             console.log('Email: ' + request.result.email);
+        //         } else
+        //             console.log('未获得数据记录');
+        //     };
+        // }
+
+        request.onerror = (event) => {
+            console.log('数据库打开报错')
+        }
+
+        request.onsuccess = (event) => {
+            db = event.target.result
+        }
+
+        request.onupgradeneeded = (event) => {
+            db = event.target.result
+
+            if (!db.objectStoreNames.contains('person'))
+                objectStore = db.createObjectStore('person', { keyPath: 'id', autoIncrement: true });
+
+            read()
+        }
+
+    </script>
+</body>
+
+</html>

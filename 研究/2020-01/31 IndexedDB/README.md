@@ -16,8 +16,10 @@
 
 打开数据库
 const request = window.indexedDB.open(databaseName, version);
-// 表
+// 数据库
 let db = null;
+// 表
+let objectStore = null;
 
 request.onerror = function (event) {
   console.log('数据库打开报错');
@@ -31,19 +33,19 @@ request.onsuccess = function (event) {
 
 
 upgradeneeded 事件
-如果指定的版本号，大于数据库的实际版本号，就会发生数据库升级事件upgradeneeded。
-request.onupgradeneeded = function (event) {
-  db = event.target.result;
-}
-
+如果指定的版本号, 大于数据库的实际版本号，就会发生数据库升级事件 upgradeneeded.
 建表
 request.onupgradeneeded = function(event) {
   db = event.target.result;
 
+  // 由于数据库由无到有 属于数据库升级的情况 会触发 onupgradeneeded 事件 所以将建表在此 操作
   // 判断此表不存在的话 创建 person 表
   if (!db.objectStoreNames.contains('person'))
-    objectStore = db.createObjectStore('person', { keyPath: 'id' });
+    objectStore = db.createObjectStore('person', { keyPath: 'id', autoIncrement: true});
+  
+  console.log(objectStore)
 }
+
 
 
 ```
