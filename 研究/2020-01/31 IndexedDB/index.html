@@ -15,26 +15,87 @@
         let db = null;
         let objectStore = null;
 
+        const add = () => {
+            // const transaction = db.transaction(['person'], 'readwrite')
+            // const objectStore = transaction.objectStore('person')
 
-        // const read = () => {
-        //     console.log(db)
-        //     const objectStore = db.objectStoreNames('person')
-        //     const request = objectStore.get(1);
+            // console.log(transaction)
+            // console.log(objectStore)
 
-        //     request.onerror = () => {
-        //         console.log('事务失败');
-        //     };
+            // const request = db.transaction(['person'], 'readwrite')
+            //     .objectStore('person')
+            //     .add({ name: '张三', age: 24, email: 'zhangsan@example.com' });
 
-        //     request.onsuccess = () => {
-        //         console.log(request.result)
-        //         if (request.result) {
-        //             console.log('Name: ' + request.result.name);
-        //             console.log('Age: ' + request.result.age);
-        //             console.log('Email: ' + request.result.email);
-        //         } else
-        //             console.log('未获得数据记录');
-        //     };
-        // }
+            // request.onsuccess = function (event) {
+            //     console.log('数据写入成功');
+            // };
+
+            // request.onerror = function (event) {
+            //     console.log('数据写入失败');
+            // }
+        }
+
+        const read = () => {
+            const transaction = db.transaction(['person'], 'readwrite')
+            const objectStore = transaction.objectStore('person')
+
+            // 获取主键为 1 的数据
+            const request = objectStore.get(1);
+
+            request.onerror = (event) => {
+                console.log('事务失败');
+            };
+
+            request.onsuccess = (event) => {
+                if (request.result)
+                    console.log(request.result)
+                else console.log('未获得数据记录');
+            };
+        }
+
+        const readAll = () => {
+            const transaction = db.transaction('person')
+            const objectStore = transaction.objectStore('person')
+            console.log(1)
+
+            // openCursor 是用来获取一个 IDBCursor 对象，用来遍历索引里面的所有条目
+            objectStore.openCursor().onsuccess = function (event) {
+                const cursor = event.target.result;
+
+                if (cursor) {
+                    console.log(cursor)
+                    // 指针向前移动一个位置。它可以接受一个主键作为参数，这时会跳转到这个主键
+                    cursor.continue();
+                } else
+                    console.log('没有更多数据了！');
+            };
+        }
+
+        const update = () => {
+            const transaction = db.transaction(['person'], 'readwrite')
+            const objectStore = transaction.objectStore('person')
+
+            const request = objectStore.put({ id: 1, name: '李四', age: 35, email: 'lisi@example.com' });
+
+            request.onsuccess = function (event) {
+                console.log('数据更新成功');
+            };
+
+            request.onerror = function (event) {
+                console.log('数据更新失败');
+            }
+        }
+
+        const remove = () => {
+            const transaction = db.transaction(['person'], 'readwrite')
+            const objectStore = transaction.objectStore('person')
+
+            const request = objectStore.delete(10)
+
+            request.onsuccess = function (event) {
+                console.log('数据删除成功');
+            };
+        }
 
         request.onerror = (event) => {
             console.log('数据库打开报错')
@@ -42,6 +103,12 @@
 
         request.onsuccess = (event) => {
             db = event.target.result
+
+            // add()
+            // read()
+            // readAll()
+            // update();
+            // remove()
         }
 
         request.onupgradeneeded = (event) => {
@@ -49,10 +116,9 @@
 
             if (!db.objectStoreNames.contains('person'))
                 objectStore = db.createObjectStore('person', { keyPath: 'id', autoIncrement: true });
-
-            read()
         }
 
+        // add()
     </script>
 </body>
 

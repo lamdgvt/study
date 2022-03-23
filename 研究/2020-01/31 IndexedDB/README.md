@@ -40,12 +40,93 @@ request.onupgradeneeded = function(event) {
 
   // 由于数据库由无到有 属于数据库升级的情况 会触发 onupgradeneeded 事件 所以将建表在此 操作
   // 判断此表不存在的话 创建 person 表
-  if (!db.objectStoreNames.contains('person'))
-    objectStore = db.createObjectStore('person', { keyPath: 'id', autoIncrement: true});
-  
-  console.log(objectStore)
+  if (!db.objectStoreNames.contains('person')) {
+      // keyPath 为 id 主键 autoIncrement 自增长
+      objectStore = db.createObjectStore('person', { keyPath: 'id', autoIncrement: true});
+  }
 }
 
+新增数据操作
+const add = () => {
+  // IDBTransaction 对象用来异步操作数据库事务, 所有的读写操作都要通过这个对象进行
+  const transaction = db.transaction(['person'], 'readwrite')
+  // IDBObjectStore 对象对应一个对象仓库
+  const objectStore = transaction.objectStore('person')
 
+  objectStore.add({ name: '张三', age: 24, email: 'zhangsan@example.com' });
+
+  request.onsuccess = function (event) {
+      console.log('数据写入成功');
+  };
+
+  request.onerror = function (event) {
+      console.log('数据写入失败');
+  }
+}
+
+读取数据
+const read = () => {
+  const transaction = db.transaction(['person'], 'readwrite')
+  const objectStore = transaction.objectStore('person')
+
+  const request = objectStore.get(1);
+
+
+  request.onerror = function(event) {
+    console.log('事务失败');
+  };
+
+  request.onsuccess = function( event) {
+    if (request.result) 
+      console.log(request.result)
+    else console.log('未获得数据记录');
+  };
+}
+
+遍历数据
+const readAll = () => {
+  const transaction = db.transaction('person')
+  const objectStore = transaction.objectStore('person')
+
+  // openCursor 是用来获取一个 IDBCursor 对象，用来遍历索引里面的所有条目
+  objectStore.openCursor().onsuccess = function (event) {
+      const cursor = event.target.result;
+
+      if (cursor) {
+          console.log(cursor)
+          // 指针向前移动一个位置。它可以接受一个主键作为参数，这时会跳转到这个主键
+          cursor.continue();
+      } else
+          console.log('没有更多数据了！');
+  };
+}
+
+修改数据
+const update = () => {
+  const transaction = db.transaction(['person'], 'readwrite')
+  const objectStore = transaction.objectStore('person')
+
+  const request = objectStore.put({ id: 1, name: '李四', age: 35, email: 'lisi@example.com' });
+
+  request.onsuccess = function (event) {
+      console.log('数据更新成功');
+  };
+
+  request.onerror = function (event) {
+      console.log('数据更新失败');
+  }
+}
+
+删除数据
+const remove = () => {
+  const transaction = db.transaction(['person'], 'readwrite')
+  const objectStore = transaction.objectStore('person')
+
+  const request = objectStore.delete(10)
+
+  request.onsuccess = function (event) {
+      console.log('数据删除成功');
+  };
+}
 
 ```
