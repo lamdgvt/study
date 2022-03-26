@@ -43,6 +43,9 @@ request.onupgradeneeded = function(event) {
   if (!db.objectStoreNames.contains('person')) {
       // keyPath 为 id 主键 autoIncrement 自增长
       objectStore = db.createObjectStore('person', { keyPath: 'id', autoIncrement: true});
+
+      // 建立索引 可以让你搜索任意字段
+      objectStore.createIndex('name', 'name', { unique: false })
   }
 }
 
@@ -127,6 +130,20 @@ const remove = () => {
   request.onsuccess = function (event) {
       console.log('数据删除成功');
   };
+}
+
+使用索引
+const useIndex = () => {
+  const transaction = db.transaction(['person'], 'readonly');
+  const objectStore = transaction.objectStore('person');
+  const index = objectStore.index('name');
+  const request = index.get('张三');
+
+  request.onsuccess = function (e) {
+    const result = e.target.result;
+
+    console.log(result);
+  }
 }
 
 ```

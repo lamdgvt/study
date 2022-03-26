@@ -16,23 +16,20 @@
         let objectStore = null;
 
         const add = () => {
-            // const transaction = db.transaction(['person'], 'readwrite')
-            // const objectStore = transaction.objectStore('person')
+            const transaction = db.transaction(['person'], 'readwrite')
+            const objectStore = transaction.objectStore('person')
 
-            // console.log(transaction)
-            // console.log(objectStore)
+            const request = db.transaction(['person'], 'readwrite')
+                .objectStore('person')
+                .add({ name: '张三', age: 24, email: 'zhangsan@example.com' });
 
-            // const request = db.transaction(['person'], 'readwrite')
-            //     .objectStore('person')
-            //     .add({ name: '张三', age: 24, email: 'zhangsan@example.com' });
+            request.onsuccess = function (event) {
+                console.log('数据写入成功');
+            };
 
-            // request.onsuccess = function (event) {
-            //     console.log('数据写入成功');
-            // };
-
-            // request.onerror = function (event) {
-            //     console.log('数据写入失败');
-            // }
+            request.onerror = function (event) {
+                console.log('数据写入失败');
+            }
         }
 
         const read = () => {
@@ -56,7 +53,6 @@
         const readAll = () => {
             const transaction = db.transaction('person')
             const objectStore = transaction.objectStore('person')
-            console.log(1)
 
             // openCursor 是用来获取一个 IDBCursor 对象，用来遍历索引里面的所有条目
             objectStore.openCursor().onsuccess = function (event) {
@@ -97,6 +93,19 @@
             };
         }
 
+        const useIndex = () => {
+            const transaction = db.transaction(['person'], 'readonly');
+            const objectStore = transaction.objectStore('person');
+            const index = objectStore.index('name');
+            const request = index.get('张三');
+
+            request.onsuccess = function (e) {
+                const result = e.target.result;
+
+                console.log(result);
+            }
+        }
+
         request.onerror = (event) => {
             console.log('数据库打开报错')
         }
@@ -109,13 +118,16 @@
             // readAll()
             // update();
             // remove()
+            useIndex()
         }
 
         request.onupgradeneeded = (event) => {
             db = event.target.result
 
-            if (!db.objectStoreNames.contains('person'))
+            if (!db.objectStoreNames.contains('person')) {
                 objectStore = db.createObjectStore('person', { keyPath: 'id', autoIncrement: true });
+                objectStore.createIndex('name', 'name', { unique: false })
+            }
         }
 
         // add()
