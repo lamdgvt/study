@@ -32,4 +32,7 @@
 29. typescript 
 30. http 和 https 协议的区别
 31. IndexedDB
+32. vue transition
+33. 加入 babel 解决 es2021
+34. Xshell 7
 ```

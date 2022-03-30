@@ -146,4 +146,52 @@ const useIndex = () => {
   }
 }
 
+
+indexedDB.open()
+打开数据库  返回 IDBRequest 对象
+{
+  事件:
+  success：           打开成功。
+  error：             打开失败。
+  upgradeneeded：     第一次打开该数据库，或者数据库版本发生变化。
+  blocked：           上一次的数据库连接还未关闭。
+}
+
+indexedDB.deleteDatabase()
+删除数据库
+{
+  事件:
+  success：     删除成功
+  error：       删除报错
+}
+
+indexedDB.cmp()
+比较两个值是否为 indexedDB 的相同的主键
+0 表示相同   1 大于  -1 小于
+
+
+IDBRequest
+indexedDB.open()
+indexedDB.deleteDatabase()
+{
+  属性 && 事件
+  IDBRequest.readyState               等于pending表示操作正在进行，等于done表示操作正在完成。
+  IDBRequest.result                   返回请求的结果。如果请求失败、结果不可用，读取该属性会报错。
+  IDBRequest.error                    请求失败时，返回错误对象。
+  IDBRequest.source                   返回请求的来源（比如索引对象或 ObjectStore）。
+  IDBRequest.transaction              返回当前请求正在进行的事务，如果不包含事务，返回null。
+  IDBRequest.onsuccess                指定success事件的监听函数。
+  IDBRequest.onerror                  指定error事件的监听函数。
+  IDBOpenDBRequest.onblocked          指定blocked事件（upgradeneeded事件触发时，数据库仍然在使用）的监听函数。
+  IDBOpenDBRequest.onupgradeneeded    upgradeneeded事件的监听函数。
+}
+
+
+IDBDatabase
+IDBDatabase.close                     关闭数据库连接，实际会等所有事务完成后再关闭。
+IDBDatabase.createObjectStore         创建存放数据的对象仓库，返回 IDBObjectStore 对象。versionchange 事件调用。
+IDBDatabase.deleteObjectStore         删除指定的对象仓库。versionchange 事件调用。
+IDBDatabase.transaction               返回 IDBTransaction 事务对象。
+
+
 ```
