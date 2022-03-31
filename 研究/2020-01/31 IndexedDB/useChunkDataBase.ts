@@ -93,8 +93,9 @@ const useChunkDataBase = () => {
 			};
 		});
 
-	// 读取文件数据
-	const readFile = (primaryKey?: number) =>
+
+	// 获取文件目录数据
+	const getFileMenu = async (primaryKey?: number) =>
 		new Promise((resolve, reject) => {
 			const transaction = db.value.transaction('file_menu');
 			const objectStore = transaction.objectStore('file_menu');
@@ -104,17 +105,17 @@ const useChunkDataBase = () => {
 			request.onsuccess = () => resolve(request.result);
 		});
 
-	// 获取文件目录数据
-	const getFileMenu = async (primaryKey?: number) =>
-		await readFile(primaryKey);
-
 	// 获取 文件目录对应的 base64 数据
-	const getFileBase64 = (fileId?: number) =>
-		new Promise<any[]>((resolve, reject) => {
-			const transaction = db.value.transaction(
-				['base64_data'],
-				'readonly'
-			);
+	const getFileBase64 = (fileId?: number) => {
+		const transaction = db.value.transaction(
+			['base64_data'],
+			'readonly'
+		);
+		return new Promise<any[]>((resolve, reject) => {
+			// const transaction = db.value.transaction(
+			// 	['base64_data'],
+			// 	'readonly'
+			// );
 			const objectStore = transaction.objectStore('base64_data');
 			const index = objectStore.index('fileId');
 			const request = index.getAll(fileId);
@@ -123,6 +124,9 @@ const useChunkDataBase = () => {
 
 			request.onerror = () => resolve([]);
 		});
+	}
+	
+		
 
 	// 获取文件目录所有数据
 	const getFileMenuAll = async () => {
