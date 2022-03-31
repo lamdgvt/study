@@ -93,16 +93,49 @@ const useChunkDataBase = () => {
 			};
 		});
 
+	// 读取文件数据
+	const readFile = (primaryKey?: number) =>
+		new Promise((resolve, reject) => {
+			const transaction = db.value.transaction('file_menu');
+			const objectStore = transaction.objectStore('file_menu');
+			const request = objectStore.get(primaryKey);
+
+			request.onerror = () => reject('error: 事务失败');
+			request.onsuccess = () => resolve(request.result);
+		});
+
 	// 获取文件目录数据
-	const getFileMenu = ({
-		uid,
-		primaryKey,
-	}: {
-		uid?: string;
-		primaryKey?: number;
-	}) => {
-		if (primaryKey) {
-		}
+	const getFileMenu = async (primaryKey?: number) =>
+		await readFile(primaryKey);
+
+	// 获取 文件目录对应的 base64 数据
+	const getFileBase64 = (fileId?: number) =>
+		new Promise<any[]>((resolve, reject) => {
+			const transaction = db.value.transaction(
+				['base64_data'],
+				'readonly'
+			);
+			const objectStore = transaction.objectStore('base64_data');
+			const index = objectStore.index('fileId');
+			const request = index.getAll(fileId);
+
+			request.onsuccess = (event: any) => resolve(event.target.result);
+
+			request.onerror = () => resolve([]);
+		});
+
+	// 获取文件目录所有数据
+	const getFileMenuAll = async () => {
+		// const transaction = db.value.transaction('file_menu');
+		// const objectStore = transaction.objectStore('file_menu');
+		// objectStore.openCursor().onsuccess = function (event: any) {
+		// 	const cursor = event.target.result;
+		// 	if (cursor) {
+		// 		console.log(cursor);
+		// 		// 指针向前移动一个位置。它可以接受一个主键作为参数，这时会跳转到这个主键
+		// 		cursor.continue();
+		// 	} else console.log('没有更多数据了！');
+		// };
 	};
 
 	return {
@@ -111,6 +144,8 @@ const useChunkDataBase = () => {
 		objectStore,
 		addFileMenu,
 		getFileMenu,
+		getFileBase64,
+		getFileMenuAll,
 	};
 };
 

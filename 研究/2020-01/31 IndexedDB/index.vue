@@ -8,9 +8,8 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import useChunkDataBase from '@/hooks/useChunkDataBase'
-import { uploadAPI } from '@/api/common'
 
-const { addFileMenu, getFileMenu } = useChunkDataBase();
+const { addFileMenu, getFileMenu, getFileBase64 } = useChunkDataBase();
 
 const fileList = ref([]);
 
@@ -63,51 +62,44 @@ const setFileReader = (blob: Blob) => new Promise((resolve, reject) => {
     reader.readAsBinaryString(blob);
 })
 
-
-// 上传切片
-const uploadChunk = async (file: File, offset: number): Promise<any> => {
-    const { chunkSize, totalSize, chunkQuantity } = getFileConfig(file);
-
-    const blob = file.slice(
-        offset * chunkSize,
-        (offset + 1) * chunkSize > totalSize ? totalSize : (offset + 1) * chunkSize
-    )
-
-    const e: any = await setFileReader(blob)
-
-    const { result } = e.target
-
-    // const { data } = await uploadAPI({ result })
-
-    // if (data.code === 0) {
-
-    //     switch (true) {
-    //         // 已上传完
-    //         case offset >= chunkQuantity: return message.success('上传成功')
-
-    //         default: return await uploadChunk(file, offset + 1)
-    //     }
-    // }
-}
-
 // 切片存储
 const sliceStore = async (file: File | any) => {
     const chunkConfig = await chunkDispose(file)
 
-    const primaryKey: number = await addFileMenu({
+    const params = {
         uid: file.uid,
         name: file.name,
+    }
+
+    const primaryKey: number = await addFileMenu({
+        ...params,
         ...chunkConfig,
     })
 
-    getFileMenu({ primaryKey })
+    const data: any = await getFileMenu(primaryKey)
+
+    let chunkArr: any[] = [];
+
+    if (data)
+        chunkArr = await getFileBase64(data.id)
+
+    return {
+        chunkArr,
+        ...params
+    }
 }
 
+
+// 自定义上传
 const customRequest = async ({ file }: { file: File }) => {
-    await sliceStore(file)
+    // 切片处理 并存储到 indexedDB
+    const data = await sliceStore(file)
 
-    // uploadChunk(file, 0)
+    // 剩下的递归 自己看着办 仅供参考
+    console.log(data)
 }
+
+
 
 </script>
 

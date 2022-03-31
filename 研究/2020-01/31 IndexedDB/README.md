@@ -74,12 +74,11 @@ const read = () => {
 
   const request = objectStore.get(1);
 
-
   request.onerror = function(event) {
     console.log('事务失败');
   };
 
-  request.onsuccess = function( event) {
+  request.onsuccess = function(event) {
     if (request.result) 
       console.log(request.result)
     else console.log('未获得数据记录');
