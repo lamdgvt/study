@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        // CustomPromise 状态
+
+        // 状态
+        const status = {
+            pending: 'pending',
+            resolved: 'resolved',
+            rejected: 'rejected'
+        };
+
+        class CustomPromise {
+            status = '';
+            result = null;
+            error = null;
+            thenCallbackList = [];
+            catchCallbackList = [];
+            finallyCallbackList = [];
+            constructor(fn) {
+                this.status = 'pending'
+
+                fn.apply(this, [this.resolve.bind(this), this.reject.bind(this)])
+            }
+            // 判断是否已经 处理过任务, 避免重复更新状态
+            isDone() {
+                return this.status !== 'pending'
+            }
+            resolve(res) {
+                if (this.isDone()) return
+
+                this.status = 'resolved'
+                this.result = res;
+
+                for (const fn of this.thenCallbackList) fn(res)
+                for (const fn of this.finallyCallbackList) fn()
+            }
+            reject(error) {
+                if (this.isDone()) return
+
+                this.status = 'rejected'
+                this.error = error;
+
+                for (const fn of this.catchCallbackList) fn(error)
+                for (const fn of this.finallyCallbackList) fn()
+            }
+            then(callback) {
+                // 将 callback 存储起来
+                this.thenCallbackList.push(callback)
+
+                if (this.status === 'resolved') callback(this.result);
+
+                return this;
+            }
+            catch(callback) {
+                // 将 callback 存储起来
+                this.catchCallbackList.push(callback)
+
+                if (this.status === 'rejected') callback(this.error);
+
+                return this;
+            }
+            finally(callback) {
+                // 将 callback 存储起来
+                this.finallyCallbackList.push(callback)
+                return this;
+            }
+            static all(promiseArray) {
+                for (let team of promiseArray) if (team?.constructor?.name !== 'CustomPromise') return console.error('只能使用 CustomPromise')
+
+                return new CustomPromise((resolve, rejected) => {
+                    const resultArray = [];
+
+                    const promiseLength = promiseArray.length
+
+                    const allThen = () => {
+                        if (resultArray.length === promiseLength && resultArray.filter(item => item).length === promiseLength)
+                            resolve(resultArray)
+                    }
+
+                    for (let i = 0; i < promiseLength; i++) {
+                        const item = promiseArray[i];
+
+                        item
+                            .then((res) => {
+                                resultArray[i] = res;
+                                allThen()
+                            })
+                            .catch((error) => rejected(error))
+                    }
+                })
+            }
+            static resolve() {
+                console.log('static')
+            }
+            static reject() {
+                console.log('reject')
+            }
+        }
+
+        const a = new CustomPromise((resolve, reject) => {
+            resolve('1')
+        })
+
+        // console.dir(CustomPromise)
+        CustomPromise.all([a, a, a]).then(res => {
+            console.log(res)
+        })
+
+    </script>
+</body>
+
+</html>
