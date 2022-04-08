@@ -1,123 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+	<body>
+		<script>
+			// CustomPromise 状态
 
-<body>
+			// 状态
+			const status = {
+				pending: 'pending',
+				resolved: 'resolved',
+				rejected: 'rejected',
+			};
 
-    <script>
-        // CustomPromise 状态
+			class CustomPromise {
+				status = '';
+				result = null;
+				error = null;
+				thenCallbackList = [];
+				catchCallbackList = [];
+				finallyCallbackList = [];
+				constructor(fn) {
+					this.status = 'pending';
 
-        // 状态
-        const status = {
-            pending: 'pending',
-            resolved: 'resolved',
-            rejected: 'rejected'
-        };
+					fn.apply(this, [
+						this.resolve.bind(this),
+						this.reject.bind(this),
+					]);
+				}
+				// 判断是否已经 处理过任务, 避免重复更新状态
+				isDone() {
+					return this.status !== 'pending';
+				}
+				resolve(res) {
+					if (this.isDone()) return;
 
-        class CustomPromise {
-            status = '';
-            result = null;
-            error = null;
-            thenCallbackList = [];
-            catchCallbackList = [];
-            finallyCallbackList = [];
-            constructor(fn) {
-                this.status = 'pending'
+					this.status = 'resolved';
+					this.result = res;
 
-                fn.apply(this, [this.resolve.bind(this), this.reject.bind(this)])
-            }
-            // 判断是否已经 处理过任务, 避免重复更新状态
-            isDone() {
-                return this.status !== 'pending'
-            }
-            resolve(res) {
-                if (this.isDone()) return
+					for (const fn of this.thenCallbackList) fn(res);
+					for (const fn of this.finallyCallbackList) fn();
+				}
+				reject(error) {
+					if (this.isDone()) return;
 
-                this.status = 'resolved'
-                this.result = res;
+					this.status = 'rejected';
+					this.error = error;
 
-                for (const fn of this.thenCallbackList) fn(res)
-                for (const fn of this.finallyCallbackList) fn()
-            }
-            reject(error) {
-                if (this.isDone()) return
+					for (const fn of this.catchCallbackList) fn(error);
+					for (const fn of this.finallyCallbackList) fn();
+				}
+				then(callback) {
+					// 将 callback 存储起来
+					this.thenCallbackList.push(callback);
 
-                this.status = 'rejected'
-                this.error = error;
+					if (this.status === 'resolved') callback(this.result);
 
-                for (const fn of this.catchCallbackList) fn(error)
-                for (const fn of this.finallyCallbackList) fn()
-            }
-            then(callback) {
-                // 将 callback 存储起来
-                this.thenCallbackList.push(callback)
+					return this;
+				}
+				catch(callback) {
+					// 将 callback 存储起来
+					this.catchCallbackList.push(callback);
 
-                if (this.status === 'resolved') callback(this.result);
+					if (this.status === 'rejected') callback(this.error);
 
-                return this;
-            }
-            catch(callback) {
-                // 将 callback 存储起来
-                this.catchCallbackList.push(callback)
+					return this;
+				}
+				finally(callback) {
+					// 将 callback 存储起来
+					this.finallyCallbackList.push(callback);
+					return this;
+				}
+				static all(promiseArray) {
+					for (let team of promiseArray)
+						if (team?.constructor?.name !== 'CustomPromise')
+							return console.error('只能使用 CustomPromise');
 
-                if (this.status === 'rejected') callback(this.error);
+					return new CustomPromise((resolve, rejected) => {
+						const resultArray = [];
 
-                return this;
-            }
-            finally(callback) {
-                // 将 callback 存储起来
-                this.finallyCallbackList.push(callback)
-                return this;
-            }
-            static all(promiseArray) {
-                for (let team of promiseArray) if (team?.constructor?.name !== 'CustomPromise') return console.error('只能使用 CustomPromise')
+						const promiseLength = promiseArray.length;
 
-                return new CustomPromise((resolve, rejected) => {
-                    const resultArray = [];
+						const allThen = () => {
+							if (
+								resultArray.length === promiseLength &&
+								resultArray.filter((item) => item).length ===
+									promiseLength
+							)
+								resolve(resultArray);
+						};
 
-                    const promiseLength = promiseArray.length
+						for (let i = 0; i < promiseLength; i++) {
+							const item = promiseArray[i];
 
-                    const allThen = () => {
-                        if (resultArray.length === promiseLength && resultArray.filter(item => item).length === promiseLength)
-                            resolve(resultArray)
-                    }
+							item.then((res) => {
+								resultArray[i] = res;
+								allThen();
+							}).catch((error) => rejected(error));
+						}
+					});
+				}
+				static resolve() {
+					console.log('static');
+				}
+				static reject() {
+					console.log('reject');
+				}
+			}
 
-                    for (let i = 0; i < promiseLength; i++) {
-                        const item = promiseArray[i];
+			const a = new CustomPromise((resolve, reject) => {
+				// resolve('1');
 
-                        item
-                            .then((res) => {
-                                resultArray[i] = res;
-                                allThen()
-                            })
-                            .catch((error) => rejected(error))
-                    }
-                })
-            }
-            static resolve() {
-                console.log('static')
-            }
-            static reject() {
-                console.log('reject')
-            }
-        }
+				setTimeout(() => {
+					resolve('1');
+				}, 5000);
+			}).then((res) => {
+				console.log(res);
+			});
 
-        const a = new CustomPromise((resolve, reject) => {
-            resolve('1')
-        })
-
-        // console.dir(CustomPromise)
-        CustomPromise.all([a, a, a]).then(res => {
-            console.log(res)
-        })
-
-    </script>
-</body>
-
+			// console.dir(CustomPromise)
+			CustomPromise.all([a, a, a]).then((res) => {
+				console.log(res);
+			});
+		</script>
+	</body>
 </html>

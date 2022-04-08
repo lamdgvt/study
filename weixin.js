@@ -7,6 +7,8 @@
  *  小程序根目录的 app.json 文件全局配置.
  *
  *  pages   array[string]   页面路径列表
+ *  project.config.json     项目的配置文件
+ *  sitemap.json            是否允许被微信索引
  *
  *  window  Object  全局的默认窗口表现
  *  {
