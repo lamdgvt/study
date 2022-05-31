@@ -28,15 +28,15 @@
 ### 25. 登陆无感验证
 26. vue3 所有api
 27. npm 发布技术
-28. 微前端
+### 28. 微前端
 29. typescript
 30. http 和 https 协议的区别
 ### 31. IndexedDB
 32. vue transition
 33. 加入 babel 解决 es2021
 34. XShell 7
-35. Base64 二进制流 文本流
-36. 计算机网络底层原理
+35. 
+### 36. 计算机网络底层原理
 37. shadow-root
 38. es5 构造函数
 ### 39. MouseEvent 坐标详解
