@@ -4,7 +4,6 @@ Vetur
 Eslint
 
 Prettier -Code formatter    格式化
-Indent Rainbow              缩进区域展示优化
 npm Intellisense            智能补全 npm 路径
 Import Cost                 Npm 包大小提示
 open in browser             在浏览器打开文件

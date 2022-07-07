@@ -42,4 +42,7 @@
 ### 39. MouseEvent 坐标详解
 40. 前端设计模式
 41. video、audio、canvas 视频协议
+42. options 请求
+43. Serverless
+44. 第三方 cookie 跨域写入
 ```
