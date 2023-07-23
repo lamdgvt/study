@@ -108,11 +108,22 @@ Etag资源的唯一标识（一个字符串，类似人类的指纹，根据变�
 3. 参数和变量不会被垃圾制回收
 
 闭包的 this 指向 window
-将闭包返回出来的函数 赋值为null
+将闭包返回出来的函数 赋值为null<!--  -->
 
-十. 垂直居中
+十二.
+    watch 和 watchEffect 
+1.  watch 只能追踪明确定义的数据源, watchEffect 会自动追踪回调数据中的基本类型响应式数据.
+2.  watch 能访问到 新值和旧值, watchEffect 不能访问.
+3.  watch 首次不会默认监听, watchEffect 会首次监听并执行回调.
+4.  watch 可以监听复合类型数据, watchEffect 不能.
+    
+    isRef:
+        检查某个值是否为Ref
+    unRef:
+        如果是Ref, 返回内部值 .value. 否则返回参数本身.
+    toRef:
+        基于响应式对象上的一个属性, 创建一个对应的Ref. 数据变化进行相互绑定.
+    toRefs:
+        将响应式对象转换成普通对象, 普通对象每个属性都指向原对象相应属性的 Ref. 每个单独的Ref 都是使用 toRef 创建的.
 
-
-十一.
-vue.use 里面做了什么事情
 ```
