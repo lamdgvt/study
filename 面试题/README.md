@@ -95,7 +95,7 @@ else {
         返回 200 为最新资源
         返回 304 直接在浏览器缓存里拿资源
 }
-
+    
 资源标识
 在Response Headers中，有两种
 Last-Modified 资源的最后修改时间（服务器返回时通过Last-Modified，客户端向服务器发起请求时，带的是If-Modified-Since）
@@ -127,3 +127,28 @@ Etag资源的唯一标识（一个字符串，类似人类的指纹，根据变�
         将响应式对象转换成普通对象, 普通对象每个属性都指向原对象相应属性的 Ref. 每个单独的Ref 都是使用 toRef 创建的.
 
 ```
+
+app 和 h5 的交互方式
+1. URL Scheme   唤起app 并指定的页面 参数 （劫持url 跳转）
+2. window 注入 api
+
+click 点击事件延迟 300ms
+
+click 替换成 touchstart
+
+
+第一步，创建XMLHttpRequest对象  new XMLHttpRequest()
+第二步，配置请求信息，xhr.open(), get
+第三步，发送请求
+第四步，发送请求,post请求下，要传递的参数放这
+
+ajax中的五种状态码
+0：请求未初始化  刚实例化
+1：服务器连接已建立(已调用open方法，但还未调用send)
+2：请求已接收(已调用send方法)
+3：请求处理中(请求已到达服务端，正在处理)
+4：请求已完成，且响应已就绪
+
+
+1. react 合成事件和原生事件
+2. 
